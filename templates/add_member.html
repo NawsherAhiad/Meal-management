@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-container">
+    <h2 class="page-title">Add New Member</h2>
+    
+    <div class="form-container">
+        <form method="POST" action="{{ url_for('add_member') }}" class="member-form">
+            <div class="form-group">
+                <label for="name">Member Name:</label>
+                <input type="text" id="name" name="name" class="form-input" required 
+                       placeholder="Enter member name" autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Member</button>
+        </form>
+    </div>
+    
+    {% if members %}
+    <div class="members-list">
+        <h3 class="section-title">Existing Members ({{ members|length }})</h3>
+        <div class="members-grid">
+            {% for member in members %}
+            <div class="member-card">
+                <span class="member-name">{{ member.name }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No members added yet. Add your first member above!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

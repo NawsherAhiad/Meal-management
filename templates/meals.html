@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-container">
+    <h2 class="page-title">Today's Meal Tracking</h2>
+    <p class="page-subtitle">
+        <span style="font-size: 1.3rem; margin-right: 8px;">📆</span>
+        <strong>{{ today.strftime('%A, %B %d, %Y') }}</strong>
+    </p>
+    
+    <form method="POST" action="{{ url_for('meals') }}" class="meals-form">
+        <div class="today-meal-section">
+            <div class="day-section">
+                <div class="day-header">
+                    <h3 class="day-name">{{ today.strftime('%A') }}</h3>
+                    <span class="day-date">
+                        <span class="date-icon">📅</span>
+                        {{ today_str }}
+                    </span>
+                </div>
+                
+                <div class="meals-table-container">
+                    <table class="meals-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Meal Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td class="member-name-cell">{{ member.name }}</td>
+                                <td class="meal-count-cell">
+                                    <select name="meal_count_{{ today_str }}_{{ member.id }}" class="meal-select">
+                                        {% set current_count = today_meals.get(member.id, None) %}
+                                        <option value="0" {% if current_count == 0 or current_count is none %}selected{% endif %}>0</option>
+                                        <option value="1" {% if current_count == 1 %}selected{% endif %}>1</option>
+                                        <option value="2" {% if current_count == 2 %}selected{% endif %}>2</option>
+                                        <option value="3" {% if current_count == 3 %}selected{% endif %}>3</option>
+                                        <option value="4" {% if current_count == 4 %}selected{% endif %}>4</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">Save Today's Meals</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

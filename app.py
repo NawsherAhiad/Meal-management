@@ -333,7 +333,7 @@ def admin():
     members = Member.query.order_by(Member.name).all()
     
     # Get meal records in date range
-    meal_records = MealRecord.query.filter(
+    meal_records = MealRecord.query.join(Member).filter(
         MealRecord.meal_date >= start_date,
         MealRecord.meal_date <= end_date
     ).order_by(MealRecord.meal_date.desc(), Member.name).all()

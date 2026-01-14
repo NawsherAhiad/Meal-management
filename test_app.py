@@ -277,6 +277,11 @@ class TestMealManagement(TestCase):
     
     def test_meal_count_range_0_to_4(self):
         """Test meal count dropdown only has 0-4 options"""
+        # Add a member first
+        member = Member(name='Test Member')
+        db.session.add(member)
+        db.session.commit()
+        
         response = self.client.get('/meals')
         self.assertEqual(response.status_code, 200)
         

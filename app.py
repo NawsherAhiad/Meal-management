@@ -18,7 +18,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-change-this-
 # Support both PostgreSQL and SQLite (for local testing)
 database_url = os.getenv('DATABASE_URL')
 if database_url:
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://meal_management_pxid_user:IXHU9LzOPMpjhJwiXjEU8rTiAHTKxtUi@dpg-d5jthoemcj7s738k1ms0-a/meal_management_pxid"
 else:
     # Fallback to SQLite for local testing
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meal_management.db'
@@ -26,6 +26,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['ADMIN_PASSWORD'] = os.getenv('ADMIN_PASSWORD', 'admin123')
 
 db = SQLAlchemy(app)
+with app.app_context():
+    db.create_all()
 
 # Database Models
 class Member(db.Model):

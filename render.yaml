@@ -1,6 +1,7 @@
 services:
   - type: web
     name: meal-management
+    plan: free
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
@@ -11,9 +12,3 @@ services:
         generateValue: true
       - key: ADMIN_PASSWORD
         sync: false
-
-databases:
-  - name: mealmanagementdb
-    plan: free
-    databaseName: mealmanagement
-    user: mealmanagement

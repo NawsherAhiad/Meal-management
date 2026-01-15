@@ -2,6 +2,7 @@ services:
   - type: web
     name: meal-management
     env: python
+    pythonVersion: 3.11.8
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
@@ -11,8 +12,6 @@ services:
         generateValue: true
       - key: ADMIN_PASSWORD
         sync: false
-      - key: PYTHON_VERSION
-        value: 3.10.8
 
 databases:
   - name: mealmanagementdb
